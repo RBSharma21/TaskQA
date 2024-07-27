@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -178,11 +179,17 @@ public class EdgeHomeObjects{
 		rightCorousalButton.click();
 	}
 
-	public void clickInvestNow() {
-
+	public void clickInvestNow() throws InterruptedException {
+		
+		Thread.sleep(2000);
+		
+		Actions action = new Actions(driver);
+		action.moveToElement(investNowButton).perform();
+		
 		Assert.assertTrue("Invest Now button is Not present", investNowButton.isDisplayed());
 		
-		investNowButton.click();
+		action.click(investNowButton).perform();
+		
 	}
 
 	public void enterEmailAndJoin(String mailId, String expectedText) {
@@ -222,12 +229,14 @@ public class EdgeHomeObjects{
 		driver.switchTo().window(parent);
 	}
 
-	public void enterImproperEmailAndJoin(String imProperMailId, String expectedText) {
+	public void enterImproperEmailAndJoin(String imProperMailId, String expectedText) throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		
 		driver.switchTo().frame(joinNowFrame);
 		emailTB.sendKeys(imProperMailId);
-		
+		Thread.sleep(2000);
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView(true);", joinNowButton);
 		wait.until(ExpectedConditions.elementToBeClickable(joinNowButton));
 		
 		Actions action = new Actions(driver);

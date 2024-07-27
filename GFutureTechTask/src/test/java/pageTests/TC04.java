@@ -12,9 +12,8 @@ public class TC04 extends BaseTest{
 	static EdgeHomeObjects ed;
 
 	@Test
-	public static void Test04() throws FileNotFoundException, IOException {
+	public static void Test04() throws FileNotFoundException, IOException, InterruptedException {
 		
-		openBrowser();
 		ed = new EdgeHomeObjects(driver);
 		
 		String URL  = excelDataReader("URL");
